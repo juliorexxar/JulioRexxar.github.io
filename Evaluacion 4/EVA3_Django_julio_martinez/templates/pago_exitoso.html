@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pago Exitoso</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% load static %}
+    <div class="row justify-content-center border-bottom border-info bg-info">
+        <div class="col-md-2 text-right">
+            <img src="{% static 'logo.jpg' %}" alt="Logo" class="img-fluid" style="max-width: 120px;">
+        </div>
+        <div class="col-4 text-center">
+            <div class="text-center ">
+                <h1 class="display-2 text-justify text-light ">CurseraMusical</h1>
+            </div>
+        </div>
+    </div>
+</head>
+<body class="bg-dark">
+    <div class="container mt-5 d-flex justify-content-center align-items-center">
+        <div class="card p-3 text-dark border-info bg-dark" style="max-width: 400px;">
+            <h2 class="mt-3 text-center text-light">Detalles del Pago</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Nombre del Servicio o Clase:</strong>
+                    <span class="float-right">{{ transaccion.nombre }}</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Fecha:</strong>
+                    <span class="float-right">{{ transaccion.fecha }}</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Precio Normal:</strong>
+                    <span class="float-right">${{ precio_normal }}</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Descuento Aplicado:</strong>
+                    <span class="float-right">${{ descuento_aplicado }}</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Precio Final:</strong>
+                    <span class="float-right">${{ transaccion.total_pago }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="card p-3 mt-3 bg-dark border-info" style="max-width: 400px;">
+            <h2 class="mt-3 text-center text-light">Proceso de Pago</h2>
+            <div class="text-dark">
+                <div class="form-group mt-3 text-light">
+                    <label for="nombreTitular">Nombre del Titular de la Tarjeta:</label>
+                    <input type="text" class="form-control" id="nombreTitular" placeholder="Ingrese el nombre del titular">
+                </div>
+                <div class="form-group mt-3 text-light">
+                    <label for="numeroTarjeta">Número de Tarjeta:</label>
+                    <input type="text" class="form-control" id="numeroTarjeta" placeholder="Ingrese el número de tarjeta">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 text-light">
+                        <label for="fechaExpiracion">Fecha de Expiración:</label>
+                        <input type="text" class="form-control" id="fechaExpiracion" placeholder="MM/AA">
+                    </div>
+                    <div class="form-group col-md-6 text-light">
+                        <label for="cvv">CVV:</label>
+                        <input type="text" class="form-control" id="cvv" placeholder="CVV">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" id="btnPagar">Pagar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a href="{% url 'clases' %}" class="btn btn-primary btn-sm d-inline-block mt-3">Volver a la Lista de Clases</a>
+    </div>
+    
+
+    <script>
+        $(document).ready(function () {
+            var btnPagar = document.getElementById('btnPagar');
+            btnPagar.addEventListener('click', function () {
+                $('#procesoPago').addClass('d-none');
+                $('#pagoExitoso').removeClass('d-none');
+                $('#volverClases').removeClass('d-none');
+                $('#btnPagar').addClass('d-none');
+                window.location.href = "{% url 'comprobante_pago' %}";
+            });
+        });
+    </script>
+</body>
+<footer class="bg-dark text-light text-center py-4">
+    <p>&copy; 2023 Derechos reservados</p>
+</footer>
+</html>

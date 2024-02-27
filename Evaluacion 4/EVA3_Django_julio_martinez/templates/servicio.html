@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Servicios</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% load static %}
+    <div class="row justify-content-center border-bottom border-info bg-info">
+        <div class="col-md-2 text-right">
+            <img src="{% static 'logo.jpg' %}" alt="Logotipo" class="img-fluid" style="max-width: 120px;">
+        </div>
+        <div class="col-4 text-center">
+            <div class="text-center">
+                <h1 class="display-4 text-justify">CurseraMusical</h1>
+            </div>
+        </div>
+    </div>
+</head>
+<body class="bg-dark text-white">
+    <div class="container mt-5 text-center">
+        <h1 class="text-info border-bottom border-info pb-2 mb-4">Servicio de entretenimiento Completo</h1>
+        <div class="row mt-4">
+            {% for servicio in servicios %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="Servicio Imagen" style="height: 200px; object-fit: cover;">
+                    <div class="card-body bg-dark">
+                        <h5 class="card-title">{{ servicio.nombre }}</h5>
+                        <p class="card-text bg-dark">
+                            {{ servicio.tipo }} <br>
+                            Horario: {{ servicio.horario|date:"l, F j, Y" }} <br>
+                            Precio: ${{ servicio.precio }}
+                        </p>
+                        <form method="post" action="{% url 'reservar_servicio' servicio_id=servicio.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="codigo_descuento" value="{{ codigo_descuento }}">
+                            <button type="submit" class="btn btn-primary">Reservar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+<footer class="bg-dark text-light text-center py-4">
+    <p>© 2023 Derechos reservados</p>
+</footer>
+
+</html>

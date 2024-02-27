@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Clases</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% load static %}
+    <div class="row justify-content-center border-bottom border-info bg-info">
+        <div class="col-md-2 text-right">
+            <img src="{% static 'logo.jpg' %}" alt="Logo" class="img-fluid" style="max-width: 120px;">
+        </div>
+        <div class="col-4 text-center">
+            <div class="text-center ">
+                <h1 class="display-2 text-justify ">CurseraMusical</h1>
+            </div>
+        </div>
+    </div>
+</head>
+
+<body class="bg-dark text-white">
+    <div class="container mt-5 text-center">
+        <h1 class="text-info border-bottom border-info pb-2 mb-4">Clases Disponibles</h1>
+        <div class="row mt-4">
+            {% for clase in clases %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="{{ clase.imagen.url }}" class="card-img-top" alt="Clase Imagen" style="height: 200px; object-fit: cover;">
+                    <div class="card-body bg-dark">
+                        <h5 class="card-title">{{ clase.nombre }}</h5>
+                        <p class="card-text bg-dark">
+                            {{ clase.tipo }} <br>
+                            Horario: {{ clase.dia_inicio|date:"l, F j, Y" }} - {{ clase.dia_final|date:"l, F j, Y" }} - {{ clase.horario }} <br>
+                            Precio: ${{ clase.precio }}
+                        </p>
+                        <a href="{% url 'reservar_clase' clase.id %}" class="btn btn-primary">Reservar</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+<footer class="bg-dark text-light text-center py-4">
+    <p>&copy; 2023 Derechos reservados</p>
+</footer>
+
+</html>
